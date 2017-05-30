@@ -64,6 +64,8 @@ class ResourceHelper {
         cssRainsConv.put("wp_o1d6_left", new Point(126, 81));
         cssRainsConv.put("wp_o1d7", new Point(144, 81));
         cssRainsConv.put("wp_o1d7_left", new Point(90, 108));
+        cssRainsConv.put("wp_o1d8", new Point(72, 108));
+        cssRainsConv.put("wp_o1d8_left", new Point(108, 108));
         cssRainsConv.put("wp_o1d9", new Point(126, 108));
         cssRainsConv.put("wp_o1d9_left", new Point(144, 108));
         cssRainsConv.put("wp_o1d10_left", new Point(72, 81));
@@ -96,6 +98,8 @@ class ResourceHelper {
         cssRainsDyn.put("wp_o1d5d_left", new Point(72, 108));
         cssRainsDyn.put("wp_o1d6d", new Point(90, 108));
         cssRainsDyn.put("wp_o1d6d_left", new Point(108, 108));
+        cssRainsDyn.put("wp_o1d7d", new Point(54, 108));
+        cssRainsDyn.put("wp_o1d7d_left", new Point(36, 108));
         cssRainsDyn.put("wp_o1d8d", new Point(126, 81));
         cssRainsDyn.put("wp_o1d8d_left", new Point(0, 108));
         cssRainsDyn.put("wp_o1d9d", new Point(18, 108));
