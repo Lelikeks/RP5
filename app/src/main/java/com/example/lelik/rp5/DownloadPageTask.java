@@ -1,7 +1,9 @@
 package com.example.lelik.rp5;
 
+import android.app.AlertDialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -15,7 +17,7 @@ enum ForecastPeriod {
     SixDays
 }
 
-class DownloadPageTask extends AsyncTask<String, Void, Forecast> {
+class DownloadPageTask extends AsyncTask<String, Void, AsyncTaskResult<Forecast>> {
     private MainActivity activity;
     private ForecastPeriod forecastPeriod;
 
@@ -30,17 +32,17 @@ class DownloadPageTask extends AsyncTask<String, Void, Forecast> {
     }
 
     @Override
-    protected Forecast doInBackground(String... params) {
+    protected AsyncTaskResult<Forecast> doInBackground(String... params) {
         try {
             String rp5 = downloadString(params[0]);
             String yartemp = downloadString(params[1]);
+            Forecast forecast = ForecastParser.parseHtml(rp5, yartemp, forecastPeriod);
 
-            return ForecastParser.parseHtml(rp5, yartemp, forecastPeriod);
+            return new AsyncTaskResult<>(forecast);
         }
         catch (Exception e) {
-            e.printStackTrace();
+            return new AsyncTaskResult<>(e);
         }
-        return null;
     }
 
     private String downloadString(String param) throws Exception {
@@ -57,8 +59,22 @@ class DownloadPageTask extends AsyncTask<String, Void, Forecast> {
     }
 
     @Override
-    protected void onPostExecute(Forecast forecast) {
-        super.onPostExecute(forecast);
+    protected void onPostExecute(AsyncTaskResult<Forecast> result) {
+        super.onPostExecute(result);
+
+        if (result.getError() != null) {
+            AlertDialog dlg = new AlertDialog.Builder(activity)
+                    .setTitle("Ошибка сети")
+                    .setMessage("Не удалось загрузить данные с сайта, возможно отсутствует доступ к сети.\n\n" + result.getError().toString())
+                    .show();
+
+            activity.setIsBusy(false);
+            setRadioEnabled(true);
+
+            return;
+        }
+
+        Forecast forecast = result.getResult();
 
         TextView textYartemp = (TextView) activity.findViewById(R.id.textYartemp);
         textYartemp.setText(forecast.YarTemp);
