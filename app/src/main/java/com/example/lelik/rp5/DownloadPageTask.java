@@ -1,9 +1,11 @@
 package com.example.lelik.rp5;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -66,6 +68,18 @@ class DownloadPageTask extends AsyncTask<String, Void, AsyncTaskResult<Forecast>
             AlertDialog dlg = new AlertDialog.Builder(activity)
                     .setTitle("Ошибка сети")
                     .setMessage("Не удалось загрузить данные с сайта, возможно отсутствует доступ к сети.\n\n" + result.getError().toString())
+                    .setPositiveButton("Повторить", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            activity.radioClick(null);
+                        }
+                    })
+                    .setNegativeButton("Закрыть", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    })
                     .show();
 
             activity.setIsBusy(false);
