@@ -9,8 +9,8 @@ import java.io.InputStreamReader;
  * Created by lelik on 29.03.2017.
  */
 
-public class IOHelper {
-    public static String streamToString(InputStream inputStream) throws IOException {
+class IOHelper {
+    static String streamToString(InputStream inputStream) throws IOException {
         int i = inputStream.available();
 
         BufferedReader reader = null;

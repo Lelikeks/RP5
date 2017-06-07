@@ -2,10 +2,7 @@ package com.example.lelik.rp5;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -96,10 +93,10 @@ class DownloadPageTask extends AsyncTask<String, Void, AsyncTaskResult<Forecast>
         TextView textYartempDiff = (TextView) activity.findViewById(R.id.textYartempDiff);
         textYartempDiff.setText(forecast.YarTempDiff);
         if (forecast.YarTempDiff.startsWith("-")) {
-            textYartempDiff.setTextColor(Color.parseColor("#0000A0"));
+            textYartempDiff.setTextColor(activity.getResources().getColor(R.color.yartemp_minus));
         }
         else {
-            textYartempDiff.setTextColor(Color.parseColor("#A00000"));
+            textYartempDiff.setTextColor(activity.getResources().getColor(R.color.yartemp_plus));
         }
 
         TextView textRefresh = (TextView) activity.findViewById(R.id.textRefresh);

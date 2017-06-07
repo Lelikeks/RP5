@@ -47,7 +47,9 @@ class ItemsListAdapter extends BaseAdapter {
 
         TextView textTemp = (TextView) view.findViewById(R.id.textTemp);
         textTemp.setText(current.Temp);
-        textTemp.setTextColor(current.Temp.startsWith("-") ? Color.parseColor("#2B63A0") : Color.parseColor("#FF5900"));
+        textTemp.setTextColor(current.Temp.startsWith("-")
+                ? view.getResources().getColor(R.color.temp_minus)
+                : view.getResources().getColor(R.color.temp_plus));
 
         SetGraphicItem(current.Clouds, view, R.id.imageClouds, ImageType.Clouds);
         SetGraphicItem(current.Rain.FirstHalf, view, R.id.imageRainFirst, ImageType.Rain);

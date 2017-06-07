@@ -3,4 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#3F51B5</color>
+    <color name="yartemp_plus">#A00000</color>
+    <color name="yartemp_minus">#0000A0</color>
+    <color name="temp_plus">#FF5900</color>
+    <color name="temp_minus">#2B63A0</color>
 </resources>
