@@ -34,7 +34,7 @@ import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String SETTINGS_NAME = "Places3";
+    private static final String SETTINGS_NAME = "Places4";
 
     private SwipeRefreshLayout refresher;
     private boolean isBusy;
@@ -184,7 +184,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        new DownloadPageTask(this, period).execute(currentPlace.getUrl(), "http://yartemp.com/mini/");
+        String yartemp = currentPlace.isDefault() ? "http://yartemp.com/mini/" : null;
+        new DownloadPageTask(this, period).execute(currentPlace.getUrl(), yartemp);
     }
 
     public void setIsBusy(boolean isBusy) {

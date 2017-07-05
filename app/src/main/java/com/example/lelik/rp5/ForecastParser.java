@@ -109,8 +109,10 @@ final class ForecastParser {
 
         forecast.RefreshDate = getRefreshDate(html);
         Log.i("setRefreshDate", sw.getElapsedAndRestart());
-        parseYartemp(yartemp, forecast);
-        Log.i("parseYartemp", sw.getElapsedAndRestart());
+        if (yartemp != null) {
+            parseYartemp(yartemp, forecast);
+            Log.i("parseYartemp", sw.getElapsedAndRestart());
+        }
 
         return forecast;
     }

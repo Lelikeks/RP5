@@ -34,7 +34,11 @@ class DownloadPageTask extends AsyncTask<String, Void, AsyncTaskResult<Forecast>
     protected AsyncTaskResult<Forecast> doInBackground(String... params) {
         try {
             String rp5 = downloadString(params[0]);
-            String yartemp = downloadString(params[1]);
+
+            String yartemp = null;
+            if (params[1] != null) {
+                yartemp = downloadString(params[1]);
+            }
             Forecast forecast = ForecastParser.parseHtml(rp5, yartemp, forecastPeriod);
 
             return new AsyncTaskResult<>(forecast);
@@ -62,7 +66,7 @@ class DownloadPageTask extends AsyncTask<String, Void, AsyncTaskResult<Forecast>
         super.onPostExecute(result);
 
         if (result.getError() != null) {
-            AlertDialog dlg = new AlertDialog.Builder(activity)
+            new AlertDialog.Builder(activity)
                     .setTitle("Ошибка сети")
                     .setMessage("Не удалось загрузить данные с сайта, возможно отсутствует доступ к сети.\n\n" + result.getError().toString())
                     .setPositiveButton("Повторить", new DialogInterface.OnClickListener() {
@@ -87,16 +91,17 @@ class DownloadPageTask extends AsyncTask<String, Void, AsyncTaskResult<Forecast>
 
         Forecast forecast = result.getResult();
 
-        TextView textYartemp = (TextView) activity.findViewById(R.id.textYartemp);
-        textYartemp.setText(forecast.YarTemp);
+        if (forecast.YarTemp != null) {
+            TextView textYartemp = (TextView) activity.findViewById(R.id.textYartemp);
+            textYartemp.setText(forecast.YarTemp);
 
-        TextView textYartempDiff = (TextView) activity.findViewById(R.id.textYartempDiff);
-        textYartempDiff.setText(forecast.YarTempDiff);
-        if (forecast.YarTempDiff.startsWith("-")) {
-            textYartempDiff.setTextColor(activity.getResources().getColor(R.color.yartemp_minus));
-        }
-        else {
-            textYartempDiff.setTextColor(activity.getResources().getColor(R.color.yartemp_plus));
+            TextView textYartempDiff = (TextView) activity.findViewById(R.id.textYartempDiff);
+            textYartempDiff.setText(forecast.YarTempDiff);
+            if (forecast.YarTempDiff.startsWith("-")) {
+                textYartempDiff.setTextColor(activity.getResources().getColor(R.color.yartemp_minus));
+            } else {
+                textYartempDiff.setTextColor(activity.getResources().getColor(R.color.yartemp_plus));
+            }
         }
 
         TextView textRefresh = (TextView) activity.findViewById(R.id.textRefresh);
