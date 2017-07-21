@@ -44,14 +44,6 @@ class ForecastWind {
     String Gusts;
 }
 
-interface Predicate<T> {
-    boolean test(T value);
-}
-
-interface Function<T, R> {
-    R apply(T value);
-}
-
 final class ForecastParser {
     private static Pattern rainPattern = Pattern.compile(".*\\((\\d+\\.*\\d*) (м|с)м.*");
     private static Pattern yartempPattern = Pattern.compile(".*<b>(-?\\d+\\.\\d+)</b>.*>(-?\\+?\\d+\\.\\d+)</font>.*");
@@ -72,13 +64,13 @@ final class ForecastParser {
         Log.i("clouds", sw.getElapsedAndRestart());
         Elements rains = table.select("tr:eq(3) > td:gt(0) > div:eq(0)");
         Log.i("rains", sw.getElapsedAndRestart());
-        String[] temps = getValues(table, e -> e.child(0).id().equals("t_temperature"), e -> e.child(0).text());
+        String[] temps = getTemps(table);
         Log.i("temps", sw.getElapsedAndRestart());
-        String[] windDirs = getValues(table, e -> e.text().contains("направление"), Element::text);
+        String[] windDirs = getWindDirs(table);
         Log.i("windDirs", sw.getElapsedAndRestart());
-        String[] windStrength = getValues(table, e -> e.child(0).id().equals("t_wind_velocity"), ForecastParser::getWind);
+        String[] windStrength = getWindStrength(table);
         Log.i("windStrength", sw.getElapsedAndRestart());
-        String[] windGusts = getValues(table, e -> e.text().contains("порывы"), ForecastParser::getWind);
+        String[] windGusts = getWindGusts(table);
         Log.i("windGusts", sw.getElapsedAndRestart());
 
         int len = hours.size();
@@ -117,10 +109,68 @@ final class ForecastParser {
 
         forecast.RefreshDate = getRefreshDate(html);
         Log.i("setRefreshDate", sw.getElapsedAndRestart());
-        parseYartemp(yartemp, forecast);
-        Log.i("parseYartemp", sw.getElapsedAndRestart());
+        if (yartemp != null) {
+            parseYartemp(yartemp, forecast);
+            Log.i("parseYartemp", sw.getElapsedAndRestart());
+        }
 
         return forecast;
+    }
+
+    private static String[] getWindGusts(Element table) {
+        return getValues(table, new Predicate<Element>() {
+            @Override
+            public boolean test(Element e) {
+                return e.text().contains("порывы");
+            }
+        }, new Function<Element, String>() {
+            @Override
+            public String apply(Element e) {
+                return getWind(e);
+            }
+        });
+    }
+
+    private static String[] getWindStrength(Element table) {
+        return getValues(table, new Predicate<Element>() {
+            @Override
+            public boolean test(Element e) {
+                return e.child(0).id().equals("t_wind_velocity");
+            }
+        }, new Function<Element, String>() {
+            @Override
+            public String apply(Element e) {
+                return getWind(e);
+            }
+        });
+    }
+
+    private static String[] getWindDirs(Element table) {
+        return getValues(table, new Predicate<Element>() {
+            @Override
+            public boolean test(Element e) {
+                return e.text().contains("направление");
+            }
+        }, new Function<Element, String>() {
+            @Override
+            public String apply(Element e) {
+                return e.text();
+            }
+        });
+    }
+
+    private static String[] getTemps(Element table) {
+        return getValues(table, new Predicate<Element>() {
+            @Override
+            public boolean test(Element e) {
+                return e.child(0).id().equals("t_temperature");
+            }
+        }, new Function<Element, String>() {
+            @Override
+            public String apply(Element e) {
+                return e.child(0).text();
+            }
+        });
     }
 
     private static String[] getValues(Element table, Predicate<Element> predicate, Function<Element, String> selector) {

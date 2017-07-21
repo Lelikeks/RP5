@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/left_drawer"
+    android:orientation="vertical"
+    android:layout_gravity="start"
+    android:layout_width="240dp"
+    android:layout_height="match_parent"
+    android:background="#EDEEFE">
+
+    <EditText
+        android:id="@+id/newPlaceUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="Введите url места"
+        android:inputType="text"
+        android:selectAllOnFocus="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="или выберите из списка ниже"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="4dp"/>
+
+    <ListView
+        android:id="@+id/left_drawer_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp" />
+
+</LinearLayout>
