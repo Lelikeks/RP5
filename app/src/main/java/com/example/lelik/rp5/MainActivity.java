@@ -169,23 +169,23 @@ public class MainActivity extends AppCompatActivity {
 
         setIsBusy(true);
 
-        ForecastPeriod period = null;
-        RadioGroup group = (RadioGroup) findViewById(R.id.radioGroup);
-
-        switch (group.getCheckedRadioButtonId()) {
-            case R.id.radioOneDay:
-                period = ForecastPeriod.OneDay;
-                break;
-            case R.id.radioThreeDays:
-                period = ForecastPeriod.ThreeDays;
-                break;
-            case R.id.radioSixDays:
-                period = ForecastPeriod.SixDays;
-                break;
+        if (view != null || AppState.Period == null) {
+            RadioGroup group = (RadioGroup) findViewById(R.id.radioGroup);
+            switch (group.getCheckedRadioButtonId()) {
+                case R.id.radioOneDay:
+                    AppState.Period = ForecastPeriod.OneDay;
+                    break;
+                case R.id.radioThreeDays:
+                    AppState.Period = ForecastPeriod.ThreeDays;
+                    break;
+                case R.id.radioSixDays:
+                    AppState.Period = ForecastPeriod.SixDays;
+                    break;
+            }
         }
 
         String yartemp = currentPlace.isDefault() ? "http://yartemp.com/mini/" : null;
-        new DownloadPageTask(this, period).execute(currentPlace.getUrl(), yartemp);
+        new DownloadPageTask(this, AppState.Period).execute(currentPlace.getUrl(), yartemp);
     }
 
     public void setIsBusy(boolean isBusy) {
