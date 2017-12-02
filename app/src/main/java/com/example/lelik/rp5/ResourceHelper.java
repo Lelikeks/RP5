@@ -116,6 +116,8 @@ class ResourceHelper {
         cssRainsDyn.put("wp_o3d2d_left", new Point(72, 0));
         cssRainsDyn.put("wp_o3d3d", new Point(0, 0));
         cssRainsDyn.put("wp_o3d3d_left", new Point(18, 0));
+        cssRainsDyn.put("wp_o3d4d", new Point(36, 0));
+        cssRainsDyn.put("wp_o3d4d_left", new Point(54, 0));
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inScaled = false;
