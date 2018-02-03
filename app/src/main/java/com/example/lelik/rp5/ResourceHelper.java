@@ -91,8 +91,12 @@ class ResourceHelper {
         cssRainsConv.put("wp_o3d3_left", new Point(198, 27));
         cssRainsConv.put("wp_o3d2", new Point(18, 27));
         cssRainsConv.put("wp_o3d2_left", new Point(36, 27));
+        cssRainsConv.put("wp_o3d4", new Point(0, 54));
+        cssRainsConv.put("wp_o3d4_left", new Point(18, 54));
         cssRainsConv.put("wp_o3d5", new Point(54, 54));
         cssRainsConv.put("wp_o3d5_left", new Point(36, 54));
+        cssRainsConv.put("wp_o3d6", new Point(180, 27));
+        cssRainsConv.put("wp_o3d6_left", new Point(162, 27));
 
         cssRainsConvStrong.put("wp_o1d10_strong", new Point(54, 0));
 
@@ -123,6 +127,7 @@ class ResourceHelper {
         cssRainsDyn.put("wp_o3d4d", new Point(36, 0));
         cssRainsDyn.put("wp_o3d4d_left", new Point(54, 0));
         cssRainsDyn.put("wp_o3d5d", new Point(18, 27));
+        cssRainsDyn.put("wp_o3d5d_left", new Point(36, 27));
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inScaled = false;
